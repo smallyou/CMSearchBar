@@ -1,5 +1,5 @@
 //
-//  ViewController.h
+//  CMSearchBar.h
 //  CMSearchBar
 //
 //  Created by 23 on 2017/1/18.
@@ -8,8 +8,9 @@
 
 #import <UIKit/UIKit.h>
 
-@interface ViewController : UIViewController
+
+
+@interface CMSearchBar : UITextField
 
 
 @end
-

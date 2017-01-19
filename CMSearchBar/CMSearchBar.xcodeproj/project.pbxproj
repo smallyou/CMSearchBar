@@ -9,10 +9,11 @@
 /* Begin PBXBuildFile section */
 		F75D990E1E2F14EF00956AC8 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = F75D990D1E2F14EF00956AC8 /* main.m */; };
 		F75D99111E2F14EF00956AC8 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = F75D99101E2F14EF00956AC8 /* AppDelegate.m */; };
-		F75D99141E2F14EF00956AC8 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F75D99131E2F14EF00956AC8 /* ViewController.m */; };
-		F75D99171E2F14F000956AC8 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F75D99151E2F14F000956AC8 /* Main.storyboard */; };
 		F75D99191E2F14F000956AC8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F75D99181E2F14F000956AC8 /* Assets.xcassets */; };
 		F75D991C1E2F14F000956AC8 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F75D991A1E2F14F000956AC8 /* LaunchScreen.storyboard */; };
+		F76F19341E3092E400B37670 /* CMMainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F76F19331E3092E400B37670 /* CMMainViewController.m */; };
+		F76F19401E3092EB00B37670 /* CMSearchBar.m in Sources */ = {isa = PBXBuildFile; fileRef = F76F193D1E3092EB00B37670 /* CMSearchBar.m */; };
+		F76F19411E3092EB00B37670 /* CMSearchView.m in Sources */ = {isa = PBXBuildFile; fileRef = F76F193F1E3092EB00B37670 /* CMSearchView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -20,12 +21,17 @@
 		F75D990D1E2F14EF00956AC8 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		F75D990F1E2F14EF00956AC8 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		F75D99101E2F14EF00956AC8 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		F75D99121E2F14EF00956AC8 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
-		F75D99131E2F14EF00956AC8 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
-		F75D99161E2F14F000956AC8 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		F75D99181E2F14F000956AC8 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		F75D991B1E2F14F000956AC8 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		F75D991D1E2F14F000956AC8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		F76F19321E3092E400B37670 /* CMMainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CMMainViewController.h; sourceTree = "<group>"; };
+		F76F19331E3092E400B37670 /* CMMainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CMMainViewController.m; sourceTree = "<group>"; };
+		F76F19391E3092EB00B37670 /* CMSearchViewHeader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CMSearchViewHeader.h; sourceTree = "<group>"; };
+		F76F193A1E3092EB00B37670 /* CMSearchViewProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CMSearchViewProtocol.h; sourceTree = "<group>"; };
+		F76F193C1E3092EB00B37670 /* CMSearchBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CMSearchBar.h; sourceTree = "<group>"; };
+		F76F193D1E3092EB00B37670 /* CMSearchBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CMSearchBar.m; sourceTree = "<group>"; };
+		F76F193E1E3092EB00B37670 /* CMSearchView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CMSearchView.h; sourceTree = "<group>"; };
+		F76F193F1E3092EB00B37670 /* CMSearchView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CMSearchView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,11 +64,11 @@
 		F75D990B1E2F14EF00956AC8 /* CMSearchBar */ = {
 			isa = PBXGroup;
 			children = (
+				F76F19351E3092EB00B37670 /* CMSearchBar */,
+				F76F19321E3092E400B37670 /* CMMainViewController.h */,
+				F76F19331E3092E400B37670 /* CMMainViewController.m */,
 				F75D990F1E2F14EF00956AC8 /* AppDelegate.h */,
 				F75D99101E2F14EF00956AC8 /* AppDelegate.m */,
-				F75D99121E2F14EF00956AC8 /* ViewController.h */,
-				F75D99131E2F14EF00956AC8 /* ViewController.m */,
-				F75D99151E2F14F000956AC8 /* Main.storyboard */,
 				F75D99181E2F14F000956AC8 /* Assets.xcassets */,
 				F75D991A1E2F14F000956AC8 /* LaunchScreen.storyboard */,
 				F75D991D1E2F14F000956AC8 /* Info.plist */,
@@ -77,6 +83,51 @@
 				F75D990D1E2F14EF00956AC8 /* main.m */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		F76F19351E3092EB00B37670 /* CMSearchBar */ = {
+			isa = PBXGroup;
+			children = (
+				F76F19361E3092EB00B37670 /* Controller */,
+				F76F19371E3092EB00B37670 /* Model */,
+				F76F19381E3092EB00B37670 /* Other */,
+				F76F193B1E3092EB00B37670 /* View */,
+			);
+			path = CMSearchBar;
+			sourceTree = "<group>";
+		};
+		F76F19361E3092EB00B37670 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		F76F19371E3092EB00B37670 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		F76F19381E3092EB00B37670 /* Other */ = {
+			isa = PBXGroup;
+			children = (
+				F76F19391E3092EB00B37670 /* CMSearchViewHeader.h */,
+				F76F193A1E3092EB00B37670 /* CMSearchViewProtocol.h */,
+			);
+			path = Other;
+			sourceTree = "<group>";
+		};
+		F76F193B1E3092EB00B37670 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				F76F193C1E3092EB00B37670 /* CMSearchBar.h */,
+				F76F193D1E3092EB00B37670 /* CMSearchBar.m */,
+				F76F193E1E3092EB00B37670 /* CMSearchView.h */,
+				F76F193F1E3092EB00B37670 /* CMSearchView.m */,
+			);
+			path = View;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -140,7 +191,6 @@
 			files = (
 				F75D991C1E2F14F000956AC8 /* LaunchScreen.storyboard in Resources */,
 				F75D99191E2F14F000956AC8 /* Assets.xcassets in Resources */,
-				F75D99171E2F14F000956AC8 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -151,23 +201,17 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F75D99141E2F14EF00956AC8 /* ViewController.m in Sources */,
+				F76F19411E3092EB00B37670 /* CMSearchView.m in Sources */,
 				F75D99111E2F14EF00956AC8 /* AppDelegate.m in Sources */,
+				F76F19341E3092E400B37670 /* CMMainViewController.m in Sources */,
 				F75D990E1E2F14EF00956AC8 /* main.m in Sources */,
+				F76F19401E3092EB00B37670 /* CMSearchBar.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
-		F75D99151E2F14F000956AC8 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				F75D99161E2F14F000956AC8 /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		F75D991A1E2F14F000956AC8 /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -310,6 +354,7 @@
 				F75D99221E2F14F000956AC8 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
