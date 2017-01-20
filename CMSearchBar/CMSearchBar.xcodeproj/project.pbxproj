@@ -14,6 +14,9 @@
 		F76F19341E3092E400B37670 /* CMMainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F76F19331E3092E400B37670 /* CMMainViewController.m */; };
 		F76F19401E3092EB00B37670 /* CMSearchBar.m in Sources */ = {isa = PBXBuildFile; fileRef = F76F193D1E3092EB00B37670 /* CMSearchBar.m */; };
 		F76F19411E3092EB00B37670 /* CMSearchView.m in Sources */ = {isa = PBXBuildFile; fileRef = F76F193F1E3092EB00B37670 /* CMSearchView.m */; };
+		F76F19441E30942E00B37670 /* CMSearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F76F19431E30942E00B37670 /* CMSearchViewController.m */; };
+		F76F194E1E31DD4B00B37670 /* CMSectionHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = F76F194D1E31DD4B00B37670 /* CMSectionHeaderView.m */; };
+		F76F19551E32003000B37670 /* CMSearchDisplayModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F76F19541E32003000B37670 /* CMSearchDisplayModel.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,6 +35,12 @@
 		F76F193D1E3092EB00B37670 /* CMSearchBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CMSearchBar.m; sourceTree = "<group>"; };
 		F76F193E1E3092EB00B37670 /* CMSearchView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CMSearchView.h; sourceTree = "<group>"; };
 		F76F193F1E3092EB00B37670 /* CMSearchView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CMSearchView.m; sourceTree = "<group>"; };
+		F76F19421E30942E00B37670 /* CMSearchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CMSearchViewController.h; sourceTree = "<group>"; };
+		F76F19431E30942E00B37670 /* CMSearchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CMSearchViewController.m; sourceTree = "<group>"; };
+		F76F194C1E31DD4B00B37670 /* CMSectionHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CMSectionHeaderView.h; sourceTree = "<group>"; };
+		F76F194D1E31DD4B00B37670 /* CMSectionHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CMSectionHeaderView.m; sourceTree = "<group>"; };
+		F76F19531E32003000B37670 /* CMSearchDisplayModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CMSearchDisplayModel.h; sourceTree = "<group>"; };
+		F76F19541E32003000B37670 /* CMSearchDisplayModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CMSearchDisplayModel.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -99,6 +108,8 @@
 		F76F19361E3092EB00B37670 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				F76F19421E30942E00B37670 /* CMSearchViewController.h */,
+				F76F19431E30942E00B37670 /* CMSearchViewController.m */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -106,6 +117,8 @@
 		F76F19371E3092EB00B37670 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				F76F19531E32003000B37670 /* CMSearchDisplayModel.h */,
+				F76F19541E32003000B37670 /* CMSearchDisplayModel.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -126,6 +139,8 @@
 				F76F193D1E3092EB00B37670 /* CMSearchBar.m */,
 				F76F193E1E3092EB00B37670 /* CMSearchView.h */,
 				F76F193F1E3092EB00B37670 /* CMSearchView.m */,
+				F76F194C1E31DD4B00B37670 /* CMSectionHeaderView.h */,
+				F76F194D1E31DD4B00B37670 /* CMSectionHeaderView.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -156,6 +171,7 @@
 		F75D99011E2F14EE00956AC8 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				CLASSPREFIX = CM;
 				LastUpgradeCheck = 0810;
 				ORGANIZATIONNAME = 23;
 				TargetAttributes = {
@@ -201,10 +217,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F76F19441E30942E00B37670 /* CMSearchViewController.m in Sources */,
 				F76F19411E3092EB00B37670 /* CMSearchView.m in Sources */,
 				F75D99111E2F14EF00956AC8 /* AppDelegate.m in Sources */,
+				F76F194E1E31DD4B00B37670 /* CMSectionHeaderView.m in Sources */,
 				F76F19341E3092E400B37670 /* CMMainViewController.m in Sources */,
 				F75D990E1E2F14EF00956AC8 /* main.m in Sources */,
+				F76F19551E32003000B37670 /* CMSearchDisplayModel.m in Sources */,
 				F76F19401E3092EB00B37670 /* CMSearchBar.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -317,6 +336,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = 4683DBG5A6;
 				INFOPLIST_FILE = CMSearchBar/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = cn.kinglian.start.CMSearchBar;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -329,6 +349,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = 4683DBG5A6;
 				INFOPLIST_FILE = CMSearchBar/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = cn.kinglian.start.CMSearchBar;
 				PRODUCT_NAME = "$(TARGET_NAME)";

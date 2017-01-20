@@ -9,7 +9,7 @@
 #import "CMSearchView.h"
 #import "CMSearchBar.h"
 
-@interface CMSearchView()
+@interface CMSearchView() <UITextFieldDelegate>
 
 @property(nonatomic,weak) CMSearchBar *searchBar;
 
@@ -44,6 +44,9 @@
     
     //设置搜索条
     CMSearchBar *searchBar = [[CMSearchBar alloc]init];
+    searchBar.delegate = self;
+    searchBar.enablesReturnKeyAutomatically = YES;
+    searchBar.returnKeyType = UIReturnKeySearch;
     [searchBar addTarget:self action:@selector(searchBarEditingDidBegin) forControlEvents:UIControlEventEditingDidBegin];
     [searchBar addTarget:self action:@selector(searchBarTextChange) forControlEvents:UIControlEventEditingChanged];
     [self addSubview:searchBar];
@@ -74,6 +77,27 @@
     }
 }
 
+- (BOOL)textFieldShouldReturn:(UITextField *)textField
+{
+    if ([self.delegate respondsToSelector:@selector(searchView:didSearchBarReturnKeyClicked:keyword:)]) {
+        [self.delegate searchView:self didSearchBarReturnKeyClicked:self.searchBar keyword:textField.text];
+    }
+    return YES;
+}
+
+
+
+- (void)setType:(CMSearchViewType)type
+{
+    _type = type;
+    
+    if (type == CMSearchViewTypeNormal) {
+        self.searchBar.enabled = YES;
+    }else {
+        self.searchBar.enabled = NO;
+    }
+    
+}
 
 
 @end

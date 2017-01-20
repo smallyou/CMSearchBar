@@ -7,9 +7,9 @@
 //
 
 #import "CMMainViewController.h"
-#import "CMSearchView.h"
+#import "CMSearchViewHeader.h"
 
-@interface CMMainViewController () <CMSearchViewProtocol>
+@interface CMMainViewController ()
 
 @property(nonatomic,weak) CMSearchView *searchView;
 
@@ -24,7 +24,9 @@
     self.title = @"搜索";
     
     CMSearchView *searchView = [[CMSearchView alloc]init];
-    searchView.delegate = self;
+    searchView.type = CMSearchViewTypeOnlyDisplay;
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(tapSearchView)];
+    [searchView addGestureRecognizer:tap];
     
     [self.view addSubview:searchView];
     self.searchView = searchView;
@@ -41,17 +43,20 @@
 }
 
 
-#pragma mark - CMSearchViewProtocol
-
-- (void)searchView:(CMSearchView *)searchView didSearchBarEditingDidBegin:(CMSearchBar *)searchBar
+- (void)tapSearchView
 {
-    NSLog(@"搜索开始编辑");
+    //关闭键盘
+    [self.searchView endEditing:YES];
+    
+    //打开搜索控制器
+    CMSearchViewController *searchVc = [[CMSearchViewController alloc]init];
+    searchVc.title = @"搜索";
+    [self.navigationController pushViewController:searchVc animated:NO];
+
 }
 
-- (void)searchView:(CMSearchView *)searchView didSearchBarTextChanged:(CMSearchBar *)searchBar
-{
-    NSLog(@"搜索内容发生改变");
-}
+
+
 
 
 @end

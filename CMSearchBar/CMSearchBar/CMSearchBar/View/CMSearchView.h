@@ -9,8 +9,15 @@
 #import <UIKit/UIKit.h>
 #import "CMSearchViewProtocol.h"
 
+typedef NS_ENUM(NSInteger,CMSearchViewType) {
+    CMSearchViewTypeNormal = 0, //正常状态，接受搜索请求
+    CMSearchViewTypeOnlyDisplay = 1 //仅仅是展示使用，用来做跳转的，不做实际搜索
+};
+
 @interface CMSearchView : UIView
 
 @property(nonatomic,weak) id <CMSearchViewProtocol> delegate;
+@property(nonatomic,assign) CMSearchViewType type;
+
 
 @end

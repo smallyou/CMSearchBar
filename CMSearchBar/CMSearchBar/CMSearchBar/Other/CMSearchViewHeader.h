@@ -10,3 +10,4 @@
 #import "CMSearchBar.h"
 #import "CMSearchView.h"
 #import "CMSearchViewProtocol.h"
+#import "CMSearchViewController.h"
