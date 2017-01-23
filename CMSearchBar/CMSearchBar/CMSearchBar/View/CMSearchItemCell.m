@@ -70,5 +70,13 @@
     
 }
 
+- (void)setFrame:(CGRect)frame
+{
+    CGSize size = frame.size;
+    size.height-=2;
+    frame.size = size;
+    [super setFrame:frame];
+}
+
 
 @end

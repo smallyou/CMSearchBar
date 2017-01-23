@@ -74,7 +74,7 @@ typedef NS_ENUM(NSInteger,CMSearhDataSourceType) {
     [super viewWillLayoutSubviews];
     
     self.searchView.frame = CGRectMake(0, 64, self.view.frame.size.width, 55);
-    self.tableView.frame = CGRectMake(0, 64 + 60, self.view.frame.size.width, self.view.frame.size.height - 64 - 60);
+    self.tableView.frame = CGRectMake(0, 64 + 55, self.view.frame.size.width, self.view.frame.size.height - 64 - 55);
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -94,6 +94,7 @@ typedef NS_ENUM(NSInteger,CMSearhDataSourceType) {
     searchView.type = CMSearchViewTypeNormal;
     searchView.delegate = self;
     [searchView getInputPoint]; //获取输入焦点
+    [searchView setupPlaceholder:self.placeholder];
     [self.view addSubview:searchView];
     self.searchView  = searchView;
     
@@ -106,6 +107,9 @@ typedef NS_ENUM(NSInteger,CMSearhDataSourceType) {
     [self.view addSubview:tableView];
     self.tableView = tableView;
 }
+
+
+
 
 #pragma mark - UITableViewDataSource
 /**行*/

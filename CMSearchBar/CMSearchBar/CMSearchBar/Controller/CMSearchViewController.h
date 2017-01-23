@@ -12,4 +12,7 @@
 
 @property(nonatomic,weak) id<CMSearchViewProtocol> delegate;
 
+/**占位符*/
+@property(nonatomic,copy) NSString *placeholder;
+
 @end

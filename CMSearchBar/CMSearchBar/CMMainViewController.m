@@ -52,6 +52,7 @@
     CMSearchViewController *searchVc = [[CMSearchViewController alloc]init];
     searchVc.delegate = self;
     searchVc.title = @"搜索";
+    searchVc.placeholder = @"搜索";
     [self.navigationController pushViewController:searchVc animated:YES];
     
     
