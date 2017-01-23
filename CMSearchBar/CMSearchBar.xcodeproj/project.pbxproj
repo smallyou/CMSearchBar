@@ -17,6 +17,7 @@
 		F76F19441E30942E00B37670 /* CMSearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F76F19431E30942E00B37670 /* CMSearchViewController.m */; };
 		F76F194E1E31DD4B00B37670 /* CMSectionHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = F76F194D1E31DD4B00B37670 /* CMSectionHeaderView.m */; };
 		F76F19551E32003000B37670 /* CMSearchDisplayModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F76F19541E32003000B37670 /* CMSearchDisplayModel.m */; };
+		F76F19581E35AD5200B37670 /* CMSearchItemCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F76F19571E35AD5200B37670 /* CMSearchItemCell.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -41,6 +42,8 @@
 		F76F194D1E31DD4B00B37670 /* CMSectionHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CMSectionHeaderView.m; sourceTree = "<group>"; };
 		F76F19531E32003000B37670 /* CMSearchDisplayModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CMSearchDisplayModel.h; sourceTree = "<group>"; };
 		F76F19541E32003000B37670 /* CMSearchDisplayModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CMSearchDisplayModel.m; sourceTree = "<group>"; };
+		F76F19561E35AD5200B37670 /* CMSearchItemCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CMSearchItemCell.h; sourceTree = "<group>"; };
+		F76F19571E35AD5200B37670 /* CMSearchItemCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CMSearchItemCell.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -141,6 +144,8 @@
 				F76F193F1E3092EB00B37670 /* CMSearchView.m */,
 				F76F194C1E31DD4B00B37670 /* CMSectionHeaderView.h */,
 				F76F194D1E31DD4B00B37670 /* CMSectionHeaderView.m */,
+				F76F19561E35AD5200B37670 /* CMSearchItemCell.h */,
+				F76F19571E35AD5200B37670 /* CMSearchItemCell.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -225,6 +230,7 @@
 				F75D990E1E2F14EF00956AC8 /* main.m in Sources */,
 				F76F19551E32003000B37670 /* CMSearchDisplayModel.m in Sources */,
 				F76F19401E3092EB00B37670 /* CMSearchBar.m in Sources */,
+				F76F19581E35AD5200B37670 /* CMSearchItemCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

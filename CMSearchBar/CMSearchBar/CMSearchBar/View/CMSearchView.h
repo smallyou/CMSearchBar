@@ -26,4 +26,10 @@ typedef NS_ENUM(NSInteger,CMSearchViewType) {
 /**失去输入焦点*/
 - (void)resignInputPoint;
 
+/**设置占位符*/
+- (void)setupPlaceholder:(NSString *)placeholder;
+
+/**设置搜索框关键字*/
+- (void)setupSearchKeyword:(NSString *)keyword;
+
 @end

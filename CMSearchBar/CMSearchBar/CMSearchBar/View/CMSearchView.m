@@ -113,4 +113,16 @@
     [self resignFirstResponder];
 }
 
+/**设置占位符*/
+- (void)setupPlaceholder:(NSString *)placeholder
+{
+    self.searchBar.placeholder = placeholder;
+}
+
+/**设置搜索框关键字*/
+- (void)setupSearchKeyword:(NSString *)keyword
+{
+    self.searchBar.text = keyword;
+}
+
 @end

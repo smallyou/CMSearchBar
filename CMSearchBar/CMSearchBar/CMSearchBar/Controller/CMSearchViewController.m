@@ -11,6 +11,7 @@
 #import "CMSectionHeaderView.h"
 #import "CMSearchBar.h"
 #import "CMSearchDisplayModel.h"
+#import "CMSearchItemCell.h"
 
 typedef NS_ENUM(NSInteger,CMSearhDataSourceType) {
     CMSearhDataSourceTypeHistory = 0,               //历史记录(历史搜索关键词记录)
@@ -115,19 +116,38 @@ typedef NS_ENUM(NSInteger,CMSearhDataSourceType) {
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *ID = @"cell";
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:ID];
-    if (cell == nil) {
-        cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:ID];
+    if (self.dataSourceType == CMSearhDataSourceTypeFuzzySearch){
+        
+        static NSString *ID = @"uzzySearch";
+        CMSearchItemCell *cell = [tableView dequeueReusableCellWithIdentifier:ID];
+        if (cell == nil) {
+            cell = [[CMSearchItemCell alloc]initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:ID];
+        }
+        
+        // 取出模型
+        CMSearchDisplayModel *searchDisplay = self.searchDatas[indexPath.row];
+        
+        // 赋值
+        cell.searchDisplay = searchDisplay;
+        
+        return cell;
     }
-    
-    // 取出模型
-    CMSearchDisplayModel *searchDisplay = self.searchDatas[indexPath.row];
-    
-    // 赋值
-    cell.textLabel.text = searchDisplay.title;
-    
-    return cell;
+    else{
+        
+        static NSString *ID = @"historyAndQuickCell";
+        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:ID];
+        if (cell == nil) {
+            cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:ID];
+        }
+        
+        // 取出模型
+        CMSearchDisplayModel *searchDisplay = self.searchDatas[indexPath.row];
+        
+        // 赋值
+        cell.textLabel.text = searchDisplay.title;
+        
+        return cell;
+    }
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
@@ -147,6 +167,49 @@ typedef NS_ENUM(NSInteger,CMSearhDataSourceType) {
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
     [self.searchView resignInputPoint];
+}
+
+/**设置行高*/
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (self.dataSourceType == CMSearhDataSourceTypeFuzzySearch) {
+        return 100;
+    }
+    return 44;
+}
+
+/**cell点击*/
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    //取消选中状态
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    
+    //关闭键盘
+    [self.searchView resignInputPoint];
+    
+    //取出模型
+    CMSearchDisplayModel *searchModel = self.searchDatas[indexPath.row];
+    
+    //点击的是搜索记录
+    if (self.dataSourceType == CMSearhDataSourceTypeHistory) {
+        //设置搜索框关键字
+        [self.searchView setupSearchKeyword:searchModel.keyword];
+        
+        //将表格数据源标记为模糊搜索并准备数据
+        self.dataSourceType = CMSearhDataSourceTypeFuzzySearch;
+        [self setupDataWithKeyword:searchModel.keyword];
+        
+    }
+    //点击的是搜索结果（快捷搜索结果+模糊搜索结果）
+    else{
+        
+        NSLog(@"点击的是快捷搜索+模糊搜索");
+        if ([self.delegate respondsToSelector:@selector(searchView:didSelectedSearchResult:atIndexPath:)]) {
+            [self.delegate searchView:self.searchView didSelectedSearchResult:searchModel atIndexPath:indexPath];
+        }
+        
+    }
+    
 }
 
 
@@ -229,15 +292,43 @@ typedef NS_ENUM(NSInteger,CMSearhDataSourceType) {
     }
     //--准备快速搜索数据
     else if(self.dataSourceType == CMSearhDataSourceTypeQuickSearch){
-        
-        
-        
+    
+        //发起快捷搜索请求
+        if ([self.delegate respondsToSelector:@selector(searchView:quickSearchWithKeyword:withResult:)]) {
+            [self.delegate searchView:self.searchView quickSearchWithKeyword:keyword withResult:^(NSArray<CMSearchDisplayModel *> *array, NSError *error) {
+                
+                if (error) {
+                    return;
+                }
+                //准备数据
+                self.searchDatas = [NSMutableArray arrayWithArray:array];
+                
+                //刷新表格
+                [self.tableView reloadData];
+                
+            }];
+        }
         
     }
     //--准备模糊搜索数据
     else{
         
         
+        //发起模糊搜索请求
+        if ([self.delegate respondsToSelector:@selector(searchView:fuzzySearchWithKeyword:withResult:)]) {
+            [self.delegate searchView:self.searchView fuzzySearchWithKeyword:keyword withResult:^(NSArray<CMSearchDisplayModel *> *array, NSError *error) {
+                
+                if (error) {
+                    return;
+                }
+                //准备数据
+                self.searchDatas = [NSMutableArray arrayWithArray:array];
+                
+                //刷新表格
+                [self.tableView reloadData];
+                
+            }];
+        }
         
     }
     

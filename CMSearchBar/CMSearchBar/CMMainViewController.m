@@ -11,7 +11,7 @@
 
 
 
-@interface CMMainViewController ()
+@interface CMMainViewController () <CMSearchViewProtocol>
 
 @property(nonatomic,weak) CMSearchView *searchView;
 
@@ -50,6 +50,7 @@
     
     //打开搜索控制器
     CMSearchViewController *searchVc = [[CMSearchViewController alloc]init];
+    searchVc.delegate = self;
     searchVc.title = @"搜索";
     [self.navigationController pushViewController:searchVc animated:YES];
     
@@ -57,8 +58,38 @@
     
 }
 
+#pragma mark - CMSearchViewDelegate
+/**发起快捷搜索后的回调*/
+- (void)searchView:(CMSearchView *)searchView quickSearchWithKeyword:(NSString *)keyword withResult:(void (^)(NSArray<CMSearchDisplayModel *> *, NSError *))result
+{
+    //构造假数据
+    CMSearchDisplayModel *disM = [[CMSearchDisplayModel alloc]init];
+    disM.title = [NSString stringWithFormat:@"快捷搜索的结果---%@",keyword];
+    NSArray *array = @[disM];
+    
+    //回调
+    result(array,nil);
+}
 
+/**发起模糊搜索后的回调*/
+- (void)searchView:(CMSearchView *)searchView fuzzySearchWithKeyword:(NSString *)keyword withResult:(void (^)(NSArray<CMSearchDisplayModel *> *, NSError *))result
+{
+    //构造假数据
+    CMSearchDisplayModel *dis = [[CMSearchDisplayModel alloc]init];
+    dis.title = [NSString stringWithFormat:@"模糊搜索假数据--%@",keyword];
+    dis.detailTitle = @"详细数据";
+    NSArray *array = @[dis];
+    
+    //回调
+    result(array,nil);
+}
 
+/**点击搜索结果后的回调*/
+- (void)searchView:(CMSearchView *)searchView didSelectedSearchResult:(CMSearchDisplayModel *)searchDisplay atIndexPath:(NSIndexPath *)indexPath
+{
+    //搜索的显示数据
+    NSLog(@"点击的是搜索结果===========");
+}
 
 
 @end

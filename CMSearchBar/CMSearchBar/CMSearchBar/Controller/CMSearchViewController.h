@@ -7,9 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#import "CMSearchViewProtocol.h"
 @interface CMSearchViewController : UIViewController
 
-
+@property(nonatomic,weak) id<CMSearchViewProtocol> delegate;
 
 @end
