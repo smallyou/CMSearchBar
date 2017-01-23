@@ -10,6 +10,7 @@
 #import "CMSearchView.h"
 #import "CMSectionHeaderView.h"
 #import "CMSearchBar.h"
+#import "CMSearchDisplayModel.h"
 
 typedef NS_ENUM(NSInteger,CMSearhDataSourceType) {
     CMSearhDataSourceTypeHistory = 0,               //历史记录(历史搜索关键词记录)
@@ -17,7 +18,7 @@ typedef NS_ENUM(NSInteger,CMSearhDataSourceType) {
     CMSearhDataSourceTypeFuzzySearch = 2            //模糊搜索(点击搜索按钮后搜索，展示搜索的所有词条的所有信息)
 };
 
-@interface CMSearchViewController () <UITableViewDelegate,UITableViewDataSource,CMSearchViewProtocol>
+@interface CMSearchViewController () <UITableViewDelegate,UITableViewDataSource,CMSearchViewProtocol,CMSectionHeaderViewDelegate>
 
 @property(nonatomic,weak) CMSearchView *searchView;
 @property(nonatomic,weak) UITableView *tableView;
@@ -62,6 +63,9 @@ typedef NS_ENUM(NSInteger,CMSearhDataSourceType) {
     
     /**初始化UI*/
     [self setupUI];
+    
+    /**加载沙盒中的搜索历史数据*/
+    self.searchHistorys = [NSMutableArray arrayWithArray:[CMSearchDisplayModel takeFromSandbox]];
 }
 
 - (void)viewWillLayoutSubviews
@@ -72,6 +76,14 @@ typedef NS_ENUM(NSInteger,CMSearhDataSourceType) {
     self.tableView.frame = CGRectMake(0, 64 + 60, self.view.frame.size.width, self.view.frame.size.height - 64 - 60);
 }
 
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    
+    //当前页面消失的时候，将内存中的搜索记录归档-存储沙盒
+    [CMSearchDisplayModel saveArrayToSandbox:self.searchHistorys];
+}
+
 
 #pragma mark - 设置UI
 /**初始化UI*/
@@ -80,6 +92,7 @@ typedef NS_ENUM(NSInteger,CMSearhDataSourceType) {
     CMSearchView *searchView = [[CMSearchView alloc]init];
     searchView.type = CMSearchViewTypeNormal;
     searchView.delegate = self;
+    [searchView getInputPoint]; //获取输入焦点
     [self.view addSubview:searchView];
     self.searchView  = searchView;
     
@@ -88,6 +101,7 @@ typedef NS_ENUM(NSInteger,CMSearhDataSourceType) {
     tableView.dataSource = self;
     tableView.sectionHeaderHeight = 30;
     tableView.bounces = NO;
+    tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     [self.view addSubview:tableView];
     self.tableView = tableView;
 }
@@ -106,7 +120,13 @@ typedef NS_ENUM(NSInteger,CMSearhDataSourceType) {
     if (cell == nil) {
         cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:ID];
     }
-    cell.textLabel.text = @"ljasjhflkjas";
+    
+    // 取出模型
+    CMSearchDisplayModel *searchDisplay = self.searchDatas[indexPath.row];
+    
+    // 赋值
+    cell.textLabel.text = searchDisplay.title;
+    
     return cell;
 }
 
@@ -116,12 +136,19 @@ typedef NS_ENUM(NSInteger,CMSearhDataSourceType) {
     CMSectionHeaderView *headerView = [tableView dequeueReusableHeaderFooterViewWithIdentifier:ID];
     if (headerView == nil) {
         headerView = [CMSectionHeaderView sectionHeaderView];
+        headerView.delegate = self;
     }
     headerView.type = (self.dataSourceType == CMSearhDataSourceTypeHistory)?CMSectionHeaderViewTypeHistory:CMSectionHeaderViewTypeSearchResult;
     return headerView;
 }
 
 #pragma mark - UITableViewDelegate
+/**当开始滚动的时候*/
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView
+{
+    [self.searchView resignInputPoint];
+}
+
 
 #pragma mark - CMSearchViewProtocol
 /**输入文字正在改变*/
@@ -157,40 +184,65 @@ typedef NS_ENUM(NSInteger,CMSearhDataSourceType) {
 /**点击搜索按钮*/
 - (void)searchView:(CMSearchView *)searchView didSearchBarReturnKeyClicked:(CMSearchBar *)searchBar keyword:(NSString *)keyword
 {
+    //设置当前的数据源类型
     self.dataSourceType = CMSearhDataSourceTypeFuzzySearch;
+    
+    //将当前搜索项作为搜索历史-去重
+    CMSearchDisplayModel *searchHistory = [[CMSearchDisplayModel alloc]init];
+    searchHistory.keyword = keyword;
+    if (![CMSearchDisplayModel isHasMutiItem:searchHistory atHistorys:self.searchHistorys]) {
+        [self.searchHistorys insertObject:searchHistory atIndex:0];
+    }
     
     //准备数据
     [self setupDataWithKeyword:keyword];
 }
 
+#pragma mark - CMSectionHeaderViewDelegate
+- (void)sectionHeaderView:(CMSectionHeaderView *)sectionHeader didClearBtnClicked:(UIButton *)button
+{
+    //将搜索历史记录清空
+    [self.searchHistorys removeAllObjects];
+    
+    //如果当前是数据源是历史搜索记录 -- 刷新
+    if (self.dataSourceType == CMSearhDataSourceTypeHistory) {
+        [self.tableView reloadData];
+    }
+    
+    //沙盒可以放在页面消失的时候一并存入
+}
+
+
 #pragma mark - 数据处理
 /**准备数据*/
 - (void)setupDataWithKeyword:(NSString *)keyword
 {
+    //--准备搜索历史数据
     if (self.dataSourceType == CMSearhDataSourceTypeHistory) {
-        //如果是准备历史搜索数据
-        // 1 构造路径
-        NSString *docPath = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES).firstObject;
-        NSString *path = [docPath stringByAppendingPathComponent:@"searchHistoryData.data"];
         
-        // 2 取出数据
-        NSArray *array = [NSKeyedUnarchiver unarchiveObjectWithFile:path];
-        self.searchHistorys = [NSMutableArray arrayWithArray:array];
+        // 1 修改表格显示数据源
+        self.searchDatas = self.searchHistorys;
         
+        // 2 刷新表格
         [self.tableView reloadData];
         
-    }else if(self.dataSourceType == CMSearhDataSourceTypeQuickSearch){
-        //快速搜索数据
+    }
+    //--准备快速搜索数据
+    else if(self.dataSourceType == CMSearhDataSourceTypeQuickSearch){
         
         
         
-    }else{
-        //模糊搜索数据
+        
+    }
+    //--准备模糊搜索数据
+    else{
+        
         
         
     }
     
-    [self.tableView reloadData];
 }
+
+
 
 @end

@@ -11,3 +11,4 @@
 #import "CMSearchView.h"
 #import "CMSearchViewProtocol.h"
 #import "CMSearchViewController.h"
+#import "CMSearchDisplayModel.h"

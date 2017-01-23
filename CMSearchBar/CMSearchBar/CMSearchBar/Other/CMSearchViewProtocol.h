@@ -18,4 +18,8 @@
 - (void)searchView:(CMSearchView *)searchView didSearchBarTextChanged:(CMSearchBar *)searchBar;
 /**点击搜索按钮后的事件*/
 - (void)searchView:(CMSearchView *)searchView didSearchBarReturnKeyClicked:(CMSearchBar *)searchBar keyword:(NSString *)keyword;
+
+
+
+
 @end

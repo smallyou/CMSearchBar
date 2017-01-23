@@ -38,7 +38,10 @@
         //添加清除历史记录按钮
         UIButton *clearButton = [UIButton buttonWithType:UIButtonTypeCustom];
         [clearButton setTitle:@"清空" forState:UIControlStateNormal];
+        clearButton.titleLabel.font = [UIFont systemFontOfSize:12.0];
         [clearButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+        [clearButton setImage:[UIImage imageNamed:@"empty"] forState:UIControlStateNormal];
+        [clearButton addTarget:self action:@selector(clearHistory:) forControlEvents:UIControlEventTouchUpInside];
         self.clearButton = clearButton;
         [self.contentView addSubview:clearButton];
         
@@ -47,7 +50,7 @@
 }
 
 #pragma mark - 设置UI
-
+/**布局子控件*/
 - (void)layoutSubviews
 {
     [super layoutSubviews];
@@ -62,6 +65,7 @@
     self.clearButton.frame = CGRectMake(self.contentView.frame.size.width - 15 - btnW, 0.5 * (self.contentView.frame.size.height - btnH), btnW, btnH);
 }
 
+#pragma mark - 重写方法
 -(void)setType:(CMSectionHeaderViewType)type
 {
     _type = type;
@@ -72,6 +76,15 @@
         self.title_label.text = @"搜索历史";
     }
     self.clearButton.hidden = type;
+}
+
+#pragma mark - 事件监听
+/**清除历史搜索记录*/
+- (void)clearHistory:(UIButton *)button
+{
+    if ([self.delegate respondsToSelector:@selector(sectionHeaderView:didClearBtnClicked:)]) {
+        [self.delegate sectionHeaderView:self didClearBtnClicked:button];
+    }
 }
 
 

@@ -99,5 +99,18 @@
     
 }
 
+#pragma mark - 工具方法
+/**获取输入焦点*/
+- (void)getInputPoint
+{
+    [self.searchBar becomeFirstResponder];
+}
+
+/**失去输入焦点*/
+- (void)resignInputPoint
+{
+    [self.searchBar resignFirstResponder];
+    [self resignFirstResponder];
+}
 
 @end

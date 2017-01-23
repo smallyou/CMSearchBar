@@ -19,5 +19,11 @@ typedef NS_ENUM(NSInteger,CMSearchViewType) {
 @property(nonatomic,weak) id <CMSearchViewProtocol> delegate;
 @property(nonatomic,assign) CMSearchViewType type;
 
+#pragma mark - 键盘相关方法
+/**获取输入焦点*/
+- (void)getInputPoint;
+
+/**失去输入焦点*/
+- (void)resignInputPoint;
 
 @end

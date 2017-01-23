@@ -9,6 +9,8 @@
 #import "CMMainViewController.h"
 #import "CMSearchViewHeader.h"
 
+
+
 @interface CMMainViewController ()
 
 @property(nonatomic,weak) CMSearchView *searchView;
@@ -30,8 +32,6 @@
     
     [self.view addSubview:searchView];
     self.searchView = searchView;
-    
-    
 }
 
 
@@ -51,8 +51,10 @@
     //打开搜索控制器
     CMSearchViewController *searchVc = [[CMSearchViewController alloc]init];
     searchVc.title = @"搜索";
-    [self.navigationController pushViewController:searchVc animated:NO];
-
+    [self.navigationController pushViewController:searchVc animated:YES];
+    
+    
+    
 }
 
 
