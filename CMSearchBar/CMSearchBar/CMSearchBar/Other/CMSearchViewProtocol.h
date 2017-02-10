@@ -28,7 +28,9 @@
 /**发起快捷搜索的时候调用，回调快捷搜索后的结果*/
 - (void)searchView:(CMSearchView *)searchView quickSearchWithKeyword:(NSString *)keyword withResult:(void(^)(NSArray<CMSearchDisplayModel*> *array,NSError *error))result;
 
-/**发起模糊搜索的时候调用，回调模糊搜索后的结果*/
+/**发起模糊搜索的时候调用，回调模糊搜索后的结果 -- 已经过期*/
 - (void)searchView:(CMSearchView *)searchView fuzzySearchWithKeyword:(NSString *)keyword withResult:(void (^)(NSArray<CMSearchDisplayModel *> *, NSError *))result;
 
+/**发起模糊搜索的时候调用，回调模糊搜索后的结果 -- 返回搜索后的任意模型的结果集和显示当前模型的cell类型*/
+- (void)searchView:(CMSearchView *)searchView fuzzySearchWithKeyword:(NSString *)keyword withResultAndCellType:(void (^)(NSArray<id> *, NSString *, NSString *, NSError *))result;
 @end

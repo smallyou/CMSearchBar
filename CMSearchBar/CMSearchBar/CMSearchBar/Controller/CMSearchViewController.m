@@ -32,7 +32,12 @@ typedef NS_ENUM(NSInteger,CMSearhDataSourceType) {
 #pragma mark - 记录标志
 /**数据源类型*/
 @property(nonatomic,assign) CMSearhDataSourceType dataSourceType;
-
+/**是否显示 sectionHeader (是否显示 搜索历史和搜索结果 的提示)*/
+@property(nonatomic,assign) BOOL isDisplaySectionTitle;
+/**记录模糊搜索cell的类型*/
+@property(nonatomic,copy) NSString *cellClass;
+/**记录cell对应数据模型的属性名称*/
+@property(nonatomic,copy) NSString *propertyName;
 
 
 
@@ -90,6 +95,9 @@ typedef NS_ENUM(NSInteger,CMSearhDataSourceType) {
 /**初始化UI*/
 - (void)setupUI
 {
+    //不显示sectionHeader
+    self.isDisplaySectionTitle = NO;
+    
     CMSearchView *searchView = [[CMSearchView alloc]init];
     searchView.type = CMSearchViewTypeNormal;
     searchView.delegate = self;
@@ -101,7 +109,7 @@ typedef NS_ENUM(NSInteger,CMSearhDataSourceType) {
     UITableView *tableView = [[UITableView alloc]init];
     tableView.delegate = self;
     tableView.dataSource = self;
-    tableView.sectionHeaderHeight = 30;
+    //tableView.sectionHeaderHeight = 30;
     tableView.bounces = NO;
     tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     [self.view addSubview:tableView];
@@ -122,7 +130,8 @@ typedef NS_ENUM(NSInteger,CMSearhDataSourceType) {
 {
     if (self.dataSourceType == CMSearhDataSourceTypeFuzzySearch){
         
-        static NSString *ID = @"uzzySearch";
+        /*
+        static NSString *ID = @"fuzzySearch";
         CMSearchItemCell *cell = [tableView dequeueReusableCellWithIdentifier:ID];
         if (cell == nil) {
             cell = [[CMSearchItemCell alloc]initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:ID];
@@ -133,7 +142,21 @@ typedef NS_ENUM(NSInteger,CMSearhDataSourceType) {
         
         // 赋值
         cell.searchDisplay = searchDisplay;
+        */
         
+        static NSString *ID = @"fuzzySearch";
+        Class class = NSClassFromString(self.cellClass);
+        UITableViewCell *cell =  [tableView dequeueReusableCellWithIdentifier:ID];
+        if (cell == nil) {
+            cell = [[class alloc]initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:ID];
+        }
+        
+        // 取出模型
+        id dataModel = self.searchDatas[indexPath.row];
+        
+        // KVC赋值
+        [cell setValue:dataModel forKeyPath:self.propertyName];
+    
         return cell;
     }
     else{
@@ -180,6 +203,11 @@ typedef NS_ENUM(NSInteger,CMSearhDataSourceType) {
         return 100;
     }
     return 44;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+{
+    return self.isDisplaySectionTitle?30:0;
 }
 
 /**cell点击*/
@@ -319,6 +347,7 @@ typedef NS_ENUM(NSInteger,CMSearhDataSourceType) {
         
         
         //发起模糊搜索请求
+        /*
         if ([self.delegate respondsToSelector:@selector(searchView:fuzzySearchWithKeyword:withResult:)]) {
             [self.delegate searchView:self.searchView fuzzySearchWithKeyword:keyword withResult:^(NSArray<CMSearchDisplayModel *> *array, NSError *error) {
                 
@@ -331,6 +360,24 @@ typedef NS_ENUM(NSInteger,CMSearhDataSourceType) {
                 //刷新表格
                 [self.tableView reloadData];
                 
+            }];
+        }
+        */
+        if ([self.delegate respondsToSelector:@selector(searchView:fuzzySearchWithKeyword:withResultAndCellType:)]) {
+            [self.delegate searchView:self.searchView fuzzySearchWithKeyword:keyword withResultAndCellType:^(NSArray<id> *array, NSString *cellClass, NSString *propertyName, NSError *error) {
+                if (error) {
+                    return;
+                }
+                
+                //记录cell的类型及其属性名称
+                self.cellClass = cellClass;
+                self.propertyName = propertyName;
+                
+                //准备数据
+                self.searchDatas = [NSMutableArray arrayWithArray:array];
+                
+                //刷新表格
+                [self.tableView reloadData];
             }];
         }
         
